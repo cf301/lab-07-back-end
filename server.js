@@ -56,9 +56,11 @@ function searchWeather(location) {
   var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   weatherData.daily.data.forEach((el) => {
+    //https://stackoverflow.com/questions/4631928/convert-utc-epoch-to-local-date
     let utcSeconds = el.time;
-    // let date = new Date();
-    // date.getTime(utcSeconds);
+    let date = new Date(0);
+    date.setUTCSeconds(utcSeconds);
+    console.log(date);
     let weather = new Weather(el.summary, date.toLocaleDateString('en-US', options));
     res.push(weather);
   });

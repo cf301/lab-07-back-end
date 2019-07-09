@@ -52,14 +52,9 @@ Start time: 9:54
 Finish time: 10:00
 Actual time needed to complete:5
 
-Number and name of feature: current weather
+Number and name of feature: get current weather
 Estimate of time needed to complete: 45
 Start time: 10:10
-Finish time: 
-Actual time needed to complete:
+Finish time:  11:32 
+Actual time needed to complete: 1:20
 
-Number and name of feature: deploy to heroku
-Estimate of time needed to complete: 15
-Start time: 9:54
-Finish time: 10:00
-Actual time needed to complete:5
