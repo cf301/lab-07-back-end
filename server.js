@@ -38,8 +38,9 @@ app.get('/weather', (req, res) => {
 })
 
 app.use('*', (request, response) => {
-  response.send('you got to the wrong place.');
+  response.status(500).send('you got to the wrong place.');
 })
+
 function Location(locationName, formatted_address, lat, lng) {
   this.search_query = locationName,
     this.formatted_query = formatted_address,

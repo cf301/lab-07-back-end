@@ -58,3 +58,8 @@ Start time: 10:10
 Finish time:  11:32 
 Actual time needed to complete: 1:20
 
+Number and name of feature: handle errors
+Estimate of time needed to complete: 5
+Start time: 11:32
+Finish time:  11:36
+Actual time needed to complete: 4 min
