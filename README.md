@@ -37,5 +37,29 @@ Actual time needed to complete: 30 min
 Number and name of feature: Locations
 Estimate of time needed to complete: 30 min
 Start time: 9:30
-Finish time: 
-Actual time needed to complete:
+Finish time: 9:54
+Actual time needed to complete:30min
+
+Number and name of feature: Locations
+Estimate of time needed to complete: 30 min
+Start time: 9:30
+Finish time: 9:54
+Actual time needed to complete:30min
+
+Number and name of feature: deploy to heroku
+Estimate of time needed to complete: 15
+Start time: 9:54
+Finish time: 10:00
+Actual time needed to complete:5
+
+Number and name of feature: get current weather
+Estimate of time needed to complete: 45
+Start time: 10:10
+Finish time:  11:32 
+Actual time needed to complete: 1:20
+
+Number and name of feature: handle errors
+Estimate of time needed to complete: 5
+Start time: 11:32
+Finish time:  11:36
+Actual time needed to complete: 4 min
