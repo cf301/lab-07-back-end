@@ -14,7 +14,7 @@ app.get('/location', (request, response) => {
   try {
     // console.log('req:',request.query.location)
     const locationData = searchToLatLng(request.query.location);
-    //get the   
+    //get data
     response.send(locationData)
   } catch (e) {
     console.log('error:', e)
@@ -43,15 +43,17 @@ app.use('*', (request, response) => {
 
 function Location(locationName, formatted_address, lat, lng) {
   this.search_query = locationName,
-    this.formatted_query = formatted_address,
-    this.latitude = lat,
-    this.longitude = lng
+  this.formatted_query = formatted_address,
+  this.latitude = lat,
+  this.longitude = lng
 }
 function Weather(forcast, time) {
   this.forcast = forcast;
   this.time = time
 }
+// eslint-disable-next-line no-unused-vars
 function searchWeather(location) {
+  //currently grabbing from a json file.
   const weatherData = require('./data/darksky.json');
   let res = []
   var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -67,7 +69,7 @@ function searchWeather(location) {
   });
   return res;
 }
-//this is whatever the user searched for 
+//this is whatever the user searched for
 function searchToLatLng(locationName) {
   console.log('locationName', locationName);
   const geoData = require('./data/geo.json');
