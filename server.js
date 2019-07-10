@@ -10,8 +10,8 @@ const PORT = process.env.PORT;
 const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 
-// var lat = 0.0;
-// var long = 0.0;
+var lat = 0.0;
+var long = 0.0;
 
 const app = express();
 app.use(cors());
@@ -26,8 +26,8 @@ function searchToLatLng(request, response) {
     .then (result => { //promise on async
       //save latlong for later
       console.log('result.body:',result.body);
-      // lat = result.body.results[0].geometry.location.lat;
-      // long = result.body.results[0].geometry.location.lng;
+      lat = result.body.results[0].geometry.location.lat;
+      long = result.body.results[0].geometry.location.lng;
 
       let location = { //object
         search_query: locationName,
@@ -55,7 +55,9 @@ function Weather(forecast) {
 //function to search the weather
 function searchWeather(request, response) {
   //google maps api
-  const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/${request.query.data.latitude},${request.query.data.latitude}`;
+  //TODO: remove hardcoded geo tags
+  const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/${lat},${long}`;
+  //request.query.data.latitude
   //results array
   //let weatherDetails = [];
   superagent.get(url) //superagent api request
