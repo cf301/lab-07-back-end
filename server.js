@@ -10,6 +10,8 @@ const PORT = process.env.PORT;
 const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 
+var longlat = [];
+
 const app = express();
 app.use(cors());
 
@@ -27,6 +29,7 @@ function searchToLatLng(request, response) {
         latitude : result.body.results[0].geometry.location.lat,
         longitude : result.body.results[0].geometry.location.lng
       }
+      longlat.push(location); // save global
       response.send(location); //send to user
     }).catch(e => {
       //if errors
@@ -35,21 +38,24 @@ function searchToLatLng(request, response) {
     })
 }
 
-//TODO: superagent path for searching the weather with an API
+//superagent path for searching the weather with an API
 app.get('/weather', searchWeather);
 //weather constructor
 function Weather(forcast) {
   this.forcast = forcast.summary;
+  console.log(forcast.summary);
   this.time = new Date(forcast.time * 1000 ).toDateString();
 }
 //function to search the weather
 function searchWeather(request, response) {
   //google maps api
   //TODO: remove hardcoded geo tags
-  const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/37.8267,-122.4233`;
+  console.log('longlat',longlat);
+  console.log('longlat[0]',longlat[0]);
+  const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/${longlat[0].latitude},${longlat[0].longitude}`;
   //results array
   let weatherDetails = [];
-
+  //TODO: fix heroku deployment; hk doesn't show summary, local log does.
   superagent.get(url) //superagent api request
     .then (result => { //promise on async
       // console.log('result.body.daily.data:',result.body.daily.data);
@@ -60,13 +66,6 @@ function searchWeather(request, response) {
         )
       });
       response.send(weatherDetails);
-      // let location = { //object
-      //   search_query: locationName,
-      //   formatted_query : result.body.results[0].formatted_address,
-      //   latitude : result.body.results[0].geometry.location.lat,
-      //   longitude : result.body.results[0].geometry.location.lng
-      // }
-      // response.send(location); //send to user
     }).catch(e => {
       //if errors
       console.error(e);
@@ -75,39 +74,9 @@ function searchWeather(request, response) {
 }
 //Searchweather ENDS
 
-//old function 
-// function searchWeather(location) {
-//   //currently grabbing from a json file.
-//   const weatherData = require('./data/darksky.json');
-//   let res = []
-//   var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
-//   weatherData.daily.data.forEach((el) => {
-//     //https://stackoverflow.com/questions/4631928/convert-utc-epoch-to-local-date
-//     let utcSeconds = el.time;
-//     let date = new Date(0);
-//     date.setUTCSeconds(utcSeconds);
-//     console.log(date);
-//     //can also use .toDateString()
-//     let weather = new Weather(el.summary, date.toLocaleDateString('en-US', options));
-//     res.push(weather);
-//   });
-//   return res;
-// }
-//end the old function
-
-
 app.use('*', (request, response) => {
   response.status(500).send('you got to the wrong place.');
 })
-
-// this constructor was how we were formally getting the data
-// function Location(locationName, formatted_address, lat, lng) {
-//   this.search_query = locationName,
-//   this.formatted_query = formatted_address,
-//   this.latitude = lat,
-//   this.longitude = lng
-// }
 
 app.listen(PORT, () => {
   console.log(`app is up on port ${PORT}`);
