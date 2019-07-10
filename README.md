@@ -34,6 +34,11 @@ Brandon Hurrington, Chris Coulon, Steve Grant
 Number and name of feature: SuperAgent API use
 Estimate of time needed to complete: 1 hr
 Start time: 930
+Finish time: 1030
+Actual time needed to complete: 1 hr
+
+Number and name of feature: weather
+Estimate of time needed to complete: 45 mins
+Start time: 1030
 Finish time: 
 Actual time needed to complete: 
-
