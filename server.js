@@ -47,6 +47,8 @@ function Location(locationName, formatted_address, lat, lng) {
   this.latitude = lat,
   this.longitude = lng
 }
+
+
 function Weather(forcast, time) {
   this.forcast = forcast;
   this.time = time
@@ -64,6 +66,7 @@ function searchWeather(location) {
     let date = new Date(0);
     date.setUTCSeconds(utcSeconds);
     console.log(date);
+    //can also use .toDateString()
     let weather = new Weather(el.summary, date.toLocaleDateString('en-US', options));
     res.push(weather);
   });
