@@ -4,30 +4,40 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const superagent = require('superagent');
 
 const PORT = process.env.PORT;
+const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
 
 const app = express();
 app.use(cors());
 
-app.get('/location', (request, response) => {
-  try {
-    // console.log('req:',request.query.location)
-    const locationData = searchToLatLng(request.query.location);
-    //get data
-    response.send(locationData)
-  } catch (e) {
-    console.log('error:', e)
+app.get('/location', searchToLatLng);
+//this is whatever the user searched for
+function searchToLatLng(request, response) {
+  const locationName = request.query.data; //location user entered
+  //google maps api 
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=${GEOCODE_API_KEY}`;
+  superagent.get(url) //superagent api request
+    .then (result => { //promise on async
+      let location = { //object
+        search_query: locationName,
+        formatted_query : result.body.results[0].formatted_address,
+        latitude : result.body.results[0].geometry.location.lat,
+        longitude : result.body.results[0].geometry.location.lng
+      }
+      response.send(location); //send to user
+    }).catch(e => {
+      //if errors
+      console.error(e);
+      response.status(500).send('status 500: things are wrong.');
+    })
+}
 
-    //catch the error
-    response.status(500).send('status 500: things are wrong.');
-  }
-  // response.send(require('./data/geo.json'));
-})
+
 app.get('/weather', (req, res) => {
-
   try {
-    console.log(req.query.location)
+    // console.log(req.query.location)
     const weather = searchWeather(req.query.location)
     res.send(weather);
     //Weather(forcast,time)
@@ -72,24 +82,7 @@ function searchWeather(location) {
   });
   return res;
 }
-//this is whatever the user searched for
-function searchToLatLng(locationName) {
-  console.log('locationName', locationName);
-  const geoData = require('./data/geo.json');
-  const location = new Location(
-    locationName,
-    geoData.results[0].formatted_address,
-    geoData.results[0].geometry.location.lat,
-    geoData.results[0].geometry.location.lng
-  )
-  // const location = {
-  //   search_query: locationName,
-  //   formatted_query: geoData.results[0].formatted_address,
-  //   latitude: geoData.results[0].geometry.location.lat,
-  //   longitude: geoData.results[0].geometry.location.lng
-  // }
-  return location;
-}
+
 
 
 app.listen(PORT, () => {
