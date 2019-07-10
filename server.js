@@ -56,7 +56,7 @@ function Weather(forcast) {
 function searchWeather(request, response) {
   //google maps api
   //TODO: remove hardcoded geo tags
-  const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/${long},${lat}`;
+  const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/${lat},${long}`;
   //results array
   let weatherDetails = [];
   //TODO: fix heroku deployment; hk doesn't show summary, local log does.
