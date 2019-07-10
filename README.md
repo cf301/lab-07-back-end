@@ -42,3 +42,9 @@ Estimate of time needed to complete: 45 mins
 Start time: 1030
 Finish time: 2
 Actual time needed to complete: 3.5 hrs
+
+Number and name of feature: map
+Estimate of time needed to complete: 5 mins
+Start time: 1:55
+Finish time: 2
+Actual time needed to complete: 5 mins
