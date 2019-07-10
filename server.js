@@ -63,8 +63,6 @@ function searchWeather(request, response) {
   superagent.get(url) //superagent api request
     .then (result => { //promise on async
       // console.log('result.body.daily.data:',result.body.daily.data);
-      
-      
       // result.body.daily.data.forEach(element => {
       //   // console.log('element:',element);
       //   weatherDetails.push(
