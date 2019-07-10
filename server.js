@@ -25,7 +25,7 @@ function searchToLatLng(request, response) {
   superagent.get(url) //superagent api request
     .then (result => { //promise on async
       //save latlong for later
-      // console.log('result.body:',result.body);
+      console.log('result.body.results[0] ------------->:',result.body.results[0]);
       // lat = result.body.results[0].geometry.location.lat;
       // long = result.body.results[0].geometry.location.lng;
 
