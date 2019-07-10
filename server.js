@@ -10,8 +10,8 @@ const PORT = process.env.PORT;
 const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 
-var lat = 0.0;
-var long = 0.0;
+// var lat = 0.0;
+// var long = 0.0;
 
 const app = express();
 app.use(cors());
@@ -55,11 +55,9 @@ function Weather(forecast) {
 //function to search the weather
 function searchWeather(request, response) {
   //google maps api
-  //TODO: remove hardcoded geo tags
-  const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/${lat},${long}`;
+  const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/${request.query.data.latitude},${request.query.data.latitude}`;
   //results array
   //let weatherDetails = [];
-  //TODO: fix heroku deployment; hk doesn't show summary, local log does.
   superagent.get(url) //superagent api request
     .then (result => { //promise on async
       // console.log('result.body.daily.data:',result.body.daily.data);
