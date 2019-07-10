@@ -40,5 +40,5 @@ Actual time needed to complete: 1 hr
 Number and name of feature: weather
 Estimate of time needed to complete: 45 mins
 Start time: 1030
-Finish time: 
-Actual time needed to complete: 
+Finish time: 2
+Actual time needed to complete: 3.5 hrs

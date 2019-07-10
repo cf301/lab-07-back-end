@@ -58,17 +58,24 @@ function searchWeather(request, response) {
   //TODO: remove hardcoded geo tags
   const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/${lat},${long}`;
   //results array
-  let weatherDetails = [];
+  //let weatherDetails = [];
   //TODO: fix heroku deployment; hk doesn't show summary, local log does.
   superagent.get(url) //superagent api request
     .then (result => { //promise on async
       // console.log('result.body.daily.data:',result.body.daily.data);
-      result.body.daily.data.forEach(element => {
-        // console.log('element:',element);
-        weatherDetails.push(
-          new Weather(element)
-        )
-      });
+      
+      
+      // result.body.daily.data.forEach(element => {
+      //   // console.log('element:',element);
+      //   weatherDetails.push(
+      //     new Weather(element)
+      //   )
+      // });
+
+      let weatherDetails = result.body.daily.data.map(function (element){
+        return new Weather(element)
+      })
+
       response.send(weatherDetails);
     }).catch(e => {
       //if errors
