@@ -10,7 +10,8 @@ const PORT = process.env.PORT;
 const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 
-var longlat = [];
+var lat = 0.0;
+var long = 0.0;
 
 const app = express();
 app.use(cors());
@@ -23,13 +24,18 @@ function searchToLatLng(request, response) {
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=${GEOCODE_API_KEY}`;
   superagent.get(url) //superagent api request
     .then (result => { //promise on async
+      //save latlong for later
+      console.log('result.body:',result.body);
+      lat = result.body.results[0].geometry.location.lat;
+      long = result.body.results[0].geometry.location.lng;
+
       let location = { //object
         search_query: locationName,
         formatted_query : result.body.results[0].formatted_address,
         latitude : result.body.results[0].geometry.location.lat,
         longitude : result.body.results[0].geometry.location.lng
       }
-      longlat.push(location); // save global
+
       response.send(location); //send to user
     }).catch(e => {
       //if errors
@@ -50,9 +56,7 @@ function Weather(forcast) {
 function searchWeather(request, response) {
   //google maps api
   //TODO: remove hardcoded geo tags
-  console.log('longlat',longlat);
-  console.log('longlat[0]',longlat[0]);
-  const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/${longlat[0].latitude},${longlat[0].longitude}`;
+  const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/${long},${lat}`;
   //results array
   let weatherDetails = [];
   //TODO: fix heroku deployment; hk doesn't show summary, local log does.
