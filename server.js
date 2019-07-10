@@ -47,10 +47,10 @@ function searchToLatLng(request, response) {
 //superagent path for searching the weather with an API
 app.get('/weather', searchWeather);
 //weather constructor
-function Weather(forcast) {
-  this.forcast = forcast.summary;
-  console.log(forcast.summary);
-  this.time = new Date(forcast.time * 1000 ).toDateString();
+function Weather(forecast) {
+  this.forecast = forecast.summary;
+  console.log(forecast.summary);
+  this.time = new Date(forecast.time * 1000 ).toDateString();
 }
 //function to search the weather
 function searchWeather(request, response) {
