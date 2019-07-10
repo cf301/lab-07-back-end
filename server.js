@@ -26,8 +26,8 @@ function searchToLatLng(request, response) {
     .then (result => { //promise on async
       //save latlong for later
       console.log('result.body:',result.body);
-      lat = result.body.results[0].geometry.location.lat;
-      long = result.body.results[0].geometry.location.lng;
+      // lat = result.body.results[0].geometry.location.lat;
+      // long = result.body.results[0].geometry.location.lng;
 
       let location = { //object
         search_query: locationName,
