@@ -67,63 +67,42 @@ function searchWeather(request, response) {
       response.status(500).send('status 500: things are wrong.');
     })
 }
-//THE COPY ENDS
+//Searchweather ENDS
 
-//the function calls
+//old function 
+// function searchWeather(location) {
+//   //currently grabbing from a json file.
+//   const weatherData = require('./data/darksky.json');
+//   let res = []
+//   var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-function searchWeather(location) {
-  //currently grabbing from a json file.
-  const weatherData = require('./data/darksky.json');
-  let res = []
-  var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+//   weatherData.daily.data.forEach((el) => {
+//     //https://stackoverflow.com/questions/4631928/convert-utc-epoch-to-local-date
+//     let utcSeconds = el.time;
+//     let date = new Date(0);
+//     date.setUTCSeconds(utcSeconds);
+//     console.log(date);
+//     //can also use .toDateString()
+//     let weather = new Weather(el.summary, date.toLocaleDateString('en-US', options));
+//     res.push(weather);
+//   });
+//   return res;
+// }
+//end the old function
 
-  weatherData.daily.data.forEach((el) => {
-    //https://stackoverflow.com/questions/4631928/convert-utc-epoch-to-local-date
-    let utcSeconds = el.time;
-    let date = new Date(0);
-    date.setUTCSeconds(utcSeconds);
-    console.log(date);
-    //can also use .toDateString()
-    let weather = new Weather(el.summary, date.toLocaleDateString('en-US', options));
-    res.push(weather);
-  });
-  return res;
-}
-//end the function calls
-
-
-
-
-//TODO: delete this later
-app.get('/weather', (req, res) => {
-  try {
-    // console.log(req.query.location)
-    const weather = searchWeather(req.query.location)
-    res.send(weather);
-    //Weather(forcast,time)
-  } catch (e) {
-    console.log('error:', e);
-    res.status(500).send('status 500: things are wrong.');
-  }
-})
 
 app.use('*', (request, response) => {
   response.status(500).send('you got to the wrong place.');
 })
 
-function Location(locationName, formatted_address, lat, lng) {
-  this.search_query = locationName,
-  this.formatted_query = formatted_address,
-  this.latitude = lat,
-  this.longitude = lng
-}
-
-
-
-
-
+// this constructor was how we were formally getting the data
+// function Location(locationName, formatted_address, lat, lng) {
+//   this.search_query = locationName,
+//   this.formatted_query = formatted_address,
+//   this.latitude = lat,
+//   this.longitude = lng
+// }
 
 app.listen(PORT, () => {
   console.log(`app is up on port ${PORT}`);
 });
-
