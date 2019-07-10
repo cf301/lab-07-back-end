@@ -38,22 +38,28 @@ function searchToLatLng(request, response) {
 //TODO: superagent path for searching the weather with an API
 app.get('/weather', searchWeather);
 //weather constructor
-function Weather(forcast, time) {
-  this.forcast = forcast;
-  this.time = time
+function Weather(forcast) {
+  this.forcast = forcast.summary;
+  this.time = new Date(forcast.time * 1000 ).toDateString();
 }
 //function to search the weather
 function searchWeather(request, response) {
-  const locationName = request.query.data; //location user entered
-  console.log('location name: ', locationName);
-  //google maps api 
+  //google maps api
+  //TODO: remove hardcoded geo tags
   const url = `https://api.darksky.net/forecast/${WEATHER_API_KEY}/37.8267,-122.4233`;
+  //results array
+  let weatherDetails = [];
 
   superagent.get(url) //superagent api request
     .then (result => { //promise on async
-
-      console.log('result: ', result);
-
+      // console.log('result.body.daily.data:',result.body.daily.data);
+      result.body.daily.data.forEach(element => {
+        // console.log('element:',element);
+        weatherDetails.push(
+          new Weather(element)
+        )
+      });
+      response.send(weatherDetails);
       // let location = { //object
       //   search_query: locationName,
       //   formatted_query : result.body.results[0].formatted_address,
